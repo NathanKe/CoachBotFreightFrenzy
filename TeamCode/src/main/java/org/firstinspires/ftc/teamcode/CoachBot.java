@@ -15,14 +15,14 @@ public class CoachBot {
 
     public CoachBot(Telemetry in_telemetry, HardwareMap in_hardwareMap){
         telemetry = in_telemetry;
-        this.initialize(telemetry, in_hardwareMap);
+        this.initialize(in_telemetry, in_hardwareMap);
     }
 
     public void initialize(Telemetry in_telemetry, HardwareMap hardwareMap){
-        carouselSpinner = new CarouselSpinner(telemetry, hardwareMap);
-        driveTrain = new DriveTrain(telemetry, hardwareMap);
-        freightArm = new FreightArm(telemetry, hardwareMap);
-        intake = new Intake(telemetry, hardwareMap);
+        carouselSpinner = new CarouselSpinner(in_telemetry, hardwareMap);
+        driveTrain = new DriveTrain(in_telemetry, hardwareMap);
+        freightArm = new FreightArm(in_telemetry, hardwareMap);
+        intake = new Intake(in_telemetry, hardwareMap);
     }
 
     public void teleOp(Gamepad gamepad1, Gamepad gamepad2){

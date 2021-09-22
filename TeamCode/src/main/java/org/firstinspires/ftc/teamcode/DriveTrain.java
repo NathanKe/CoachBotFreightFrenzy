@@ -15,8 +15,4 @@ public class DriveTrain {
     public void initialize(HardwareMap hardwareMap){
 
     }
-
-    public void driveTelem(){
-        telemetry.addData("Drive","asdfasdf");
-    }
 }
