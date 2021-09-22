@@ -10,6 +10,11 @@ public class CoachBot {
     private Intake intake;
 
     public void initialize(HardwareMap hardwareMap){
+        carouselSpinner = new CarouselSpinner();
+        driveTrain = new DriveTrain();
+        freightArm = new FreightArm();
+        intake = new Intake();
+
         carouselSpinner.initialize(hardwareMap);
         driveTrain.initialize(hardwareMap);
         freightArm.initialize(hardwareMap);

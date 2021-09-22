@@ -3,6 +3,7 @@ package org.firstinspires.ftc.teamcode;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
+
 @TeleOp(name="CoachBotTele",group="")
 public class CoachBotTele extends OpMode {
     private CoachBot coachBot;
@@ -16,6 +17,7 @@ public class CoachBotTele extends OpMode {
     @Override
     public void loop(){
         coachBot.teleOp(gamepad1, gamepad2);
+        telemetry.update();
     }
 
     @Override
