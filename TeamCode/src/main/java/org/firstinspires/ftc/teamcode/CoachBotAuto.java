@@ -9,8 +9,7 @@ public class CoachBotAuto extends LinearOpMode {
 
     @Override
     public void runOpMode(){
-        coachBot = new CoachBot();
-        coachBot.initialize(hardwareMap);
+        coachBot = new CoachBot(telemetry, hardwareMap);
 
         waitForStart();
 
