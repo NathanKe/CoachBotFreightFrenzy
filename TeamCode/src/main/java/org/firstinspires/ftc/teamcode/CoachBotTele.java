@@ -3,14 +3,14 @@ package org.firstinspires.ftc.teamcode;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
+
 @TeleOp(name="CoachBotTele",group="")
 public class CoachBotTele extends OpMode {
     private CoachBot coachBot;
 
     @Override
     public void init(){
-        coachBot = new CoachBot();
-        coachBot.initialize(hardwareMap);
+        coachBot = new CoachBot(telemetry, hardwareMap);
     }
 
     @Override
