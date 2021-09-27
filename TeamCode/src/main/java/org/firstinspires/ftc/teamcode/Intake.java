@@ -9,10 +9,5 @@ public class Intake {
 
     public Intake(Telemetry in_telemetry, HardwareMap in_hardwareMap){
         telemetry = in_telemetry;
-        this.initialize(in_hardwareMap);
-    }
-
-    public void initialize(HardwareMap hardwareMap){
-
     }
 }

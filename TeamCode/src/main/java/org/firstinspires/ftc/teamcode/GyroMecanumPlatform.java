@@ -8,9 +8,6 @@ import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
 import java.text.DecimalFormat;
 
 class GyroMecanumPlatform {
-
-    private final double YAW_CORRECT_PROPORTION_CONSTANT = 0.7;
-
     MecanumPlatform mecanumPlatform;
     Gyro gyro;
 
