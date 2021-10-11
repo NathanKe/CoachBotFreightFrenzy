@@ -27,6 +27,8 @@ public class CoachBot {
 
     public void teleOp(Gamepad gamepad1, Gamepad gamepad2){
         driveTrain.baseDriveTrain(gamepad1.left_stick_y, gamepad1.right_stick_y, 1.0);
+
+        freightArm.execute(gamepad2.a, gamepad2.b, gamepad2.x, gamepad2.y);
     }
 
     public void stopAll(){

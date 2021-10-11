@@ -6,8 +6,6 @@ import com.qualcomm.robotcore.hardware.HardwareMap;
 import org.firstinspires.ftc.robotcore.external.Telemetry;
 
 import java.text.DecimalFormat;
-import java.util.Arrays;
-import java.util.Collections;
 
 public class SixWheelPlatform {
     private Telemetry telemetry;
