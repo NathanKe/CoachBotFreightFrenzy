@@ -12,6 +12,7 @@ public class Intake {
     public Intake(Telemetry in_telemetry, HardwareMap in_hardwareMap){
         telemetry = in_telemetry;
         motorIntake = in_hardwareMap.get(DcMotor.class, "motorIntake");
+        motorIntake.setPower(0.0);
     }
 
     public void simpleDrive(double power){

@@ -32,6 +32,8 @@ public class FreightArm {
         potentiometer = in_hardwareMap.get(AnalogInput.class, "potentiometer");
 
         state = ARM_STATE.GROUND;
+
+        motorArm.setPower(0.0);
     }
 
     public void execute(boolean a_pressed, boolean b_pressed, boolean x_pressed, boolean y_pressed){

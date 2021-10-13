@@ -1,7 +1,6 @@
 package org.firstinspires.ftc.teamcode;
 
 import com.qualcomm.robotcore.hardware.DcMotor;
-import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 
 import org.firstinspires.ftc.robotcore.external.Telemetry;
@@ -21,7 +20,7 @@ public class PushBotPlatform {
         motorRight = in_hwMap.get(DcMotor.class, "motorRight");
         motorLeft = in_hwMap.get(DcMotor.class, "motorLeft");
         motorRight.setDirection(DcMotor.Direction.REVERSE);
-        stopAll();
+        stopDriveMotors();
     }
 
     void simpleDrive(double left_y, double right_x) {
@@ -37,12 +36,8 @@ public class PushBotPlatform {
         telemetry.addData("rightPow", right_pow);
     }
 
-    private void stopDriveMotors() {
+    public void stopDriveMotors() {
         motorRight.setPower(0.0);
         motorLeft.setPower(0.0);
-    }
-
-    void stopAll() {
-        stopDriveMotors();
     }
 }
