@@ -16,6 +16,7 @@ public class CoachBotTele extends OpMode {
     @Override
     public void loop(){
         coachBot.teleOp(gamepad1, gamepad2);
+        telemetry.update();
     }
 
     @Override
