@@ -73,4 +73,9 @@ public class FreightArm {
 
         motorArm.setPower(PROPORTION_CONSTANT * error);
     }
+
+    public void simpleDrive(double power){
+        motorArm.setPower(power);
+        telemetry.addData("armPow", power);
+    }
 }
