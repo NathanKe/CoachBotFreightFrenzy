@@ -13,7 +13,7 @@ public class PID_Controller {
     private double MAX_OUTPUT;
 
     private ElapsedTime TIMER;
-    private double PREV_SECONDS;
+    private double PREV_MILLISECONDS;
 
     PID_Controller(double in_Prop, double in_Intr, double in_Deriv, double in_MaxOut){
         PROPORTIONAL_CONSTANT = in_Prop;
@@ -22,6 +22,7 @@ public class PID_Controller {
 
         MAX_OUTPUT = in_MaxOut;
 
+        TIMER = new ElapsedTime(ElapsedTime.Resolution.MILLISECONDS);
         TIMER.reset();
     }
 
@@ -31,8 +32,8 @@ public class PID_Controller {
     }
 
     public double output(double error){
-        double TIME_DIFF = TIMER.seconds() - PREV_SECONDS;
-        PREV_SECONDS = TIMER.seconds();
+        double TIME_DIFF = TIMER.milliseconds() - PREV_MILLISECONDS;
+        PREV_MILLISECONDS = TIMER.milliseconds();
         PREV_ERROR = error;
         INTEGRAL_ERROR += error * TIME_DIFF;
 
