@@ -59,25 +59,26 @@ public class FreightArm {
         arm_control(state);
     }
 
-    private double voltage_from_state(ARM_STATE in_state){
+    private double voltage_error(ARM_STATE in_state){
+        double goal_voltage;
         switch (in_state) {
+            case GROUND:
+                goal_voltage = VOLTAGE_GROUND;
             case LEVEL_ONE:
-                return VOLTAGE_LEVEL_ONE;
+                goal_voltage = VOLTAGE_LEVEL_ONE;
             case LEVEL_TWO:
-                return VOLTAGE_LEVEL_TWO;
+                goal_voltage = VOLTAGE_LEVEL_TWO;
             case LEVEL_THREE:
-                return VOLTAGE_LEVEL_THREE;
+                goal_voltage = VOLTAGE_LEVEL_THREE;
             default:
-                return VOLTAGE_GROUND;
+                goal_voltage = VOLTAGE_GROUND;
         }
+
+        return goal_voltage - potentiometer.getVoltage();
     }
 
     private void arm_control(ARM_STATE goal_state){
-
-        double goal_voltage = voltage_from_state(goal_state);
-        double current_voltage = potentiometer.getVoltage();
-
-        double error = goal_voltage - current_voltage;
+        double error = voltage_error(goal_state);
         double outputPower = pid_controller.output(error);
 
         motorArm.setPower(outputPower);
