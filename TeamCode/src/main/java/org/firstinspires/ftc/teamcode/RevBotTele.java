@@ -4,22 +4,23 @@ import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
 
-@TeleOp(name="CoachBotTele",group="")
-public class CoachBotTele extends OpMode {
-    private CoachBot coachBot;
+@TeleOp(name="RevBotTele")
+public class RevBotTele extends OpMode {
+    private RevBot revBot;
 
     @Override
     public void init(){
-        coachBot = new CoachBot(telemetry, hardwareMap);
+        revBot = new RevBot(telemetry, hardwareMap);
     }
 
     @Override
     public void loop(){
-        coachBot.teleOp(gamepad1, gamepad2);
+        revBot.teleOp(gamepad1, gamepad2);
+        telemetry.update();
     }
 
     @Override
     public void stop(){
-        coachBot.stopAll();
+        revBot.stopAll();
     }
 }
