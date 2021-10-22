@@ -13,8 +13,8 @@ public class FreightArm {
     private PID_Controller pid_controller;
 
     private enum ARM_STATE {
-        GROUND,
-        LEVEL_ONE,
+        SCOOP,
+        CRUISE,
         LEVEL_TWO,
         LEVEL_THREE
     }
@@ -34,22 +34,22 @@ public class FreightArm {
         potentiometer = in_hardwareMap.get(AnalogInput.class, "potentiometer");
         pid_controller = new PID_Controller(1.0,0, 0, 0);
 
-        state = ARM_STATE.GROUND;
+        state = ARM_STATE.CRUISE;
 
         motorArm.setPower(0.0);
     }
 
-    public void execute(boolean a_pressed, boolean b_pressed, boolean x_pressed, boolean y_pressed){
-        if(a_pressed && !b_pressed && !x_pressed && !y_pressed && state != ARM_STATE.GROUND){
-            state = ARM_STATE.GROUND;
+    public void execute(boolean scoop_request, boolean cruise_request, boolean level_two_request, boolean level_three_request){
+        if(scoop_request && !cruise_request && !level_two_request && !level_three_request && state != ARM_STATE.SCOOP){
+            state = ARM_STATE.SCOOP;
             pid_controller.reset();
-        }else if(!a_pressed && b_pressed && !x_pressed && !y_pressed && state != ARM_STATE.LEVEL_ONE){
-            state = ARM_STATE.LEVEL_ONE;
+        }else if(!scoop_request && cruise_request && !level_two_request && !level_three_request && state != ARM_STATE.CRUISE){
+            state = ARM_STATE.CRUISE;
             pid_controller.reset();
-        }else if(!a_pressed && !b_pressed && x_pressed && !y_pressed && state != ARM_STATE.LEVEL_TWO){
+        }else if(!scoop_request && !cruise_request && level_two_request && !level_three_request && state != ARM_STATE.LEVEL_TWO){
             state = ARM_STATE.LEVEL_TWO;
             pid_controller.reset();
-        }else if(!a_pressed && !b_pressed && !x_pressed && y_pressed && state != ARM_STATE.LEVEL_THREE){
+        }else if(!scoop_request && !cruise_request && !level_two_request && level_three_request && state != ARM_STATE.LEVEL_THREE){
             state = ARM_STATE.LEVEL_THREE;
             pid_controller.reset();
         }else{
@@ -62,9 +62,9 @@ public class FreightArm {
     private double voltage_error(ARM_STATE in_state){
         double goal_voltage;
         switch (in_state) {
-            case GROUND:
+            case SCOOP:
                 goal_voltage = VOLTAGE_GROUND;
-            case LEVEL_ONE:
+            case CRUISE:
                 goal_voltage = VOLTAGE_LEVEL_ONE;
             case LEVEL_TWO:
                 goal_voltage = VOLTAGE_LEVEL_TWO;
@@ -79,7 +79,7 @@ public class FreightArm {
 
     private void arm_control(ARM_STATE goal_state){
         double error = voltage_error(goal_state);
-        double outputPower = pid_controller.output(error);
+        double outputPower = pid_controller.getOutput(error);
 
         motorArm.setPower(outputPower);
     }

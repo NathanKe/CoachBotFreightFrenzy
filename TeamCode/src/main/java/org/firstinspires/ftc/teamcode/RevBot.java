@@ -20,9 +20,12 @@ public class RevBot {
     }
 
     public void teleOp(Gamepad gamepad1, Gamepad gamepad2){
+        //player one drives
         pushBotPlatform.simpleDrive(-1 * gamepad1.left_stick_y, gamepad1.right_stick_x);
-        freightArm.simpleDrive(-1 * gamepad2.left_stick_y);
-        intake.simpleDrive(-1 * gamepad2.right_stick_y);
+
+        //player two works the arm
+        intake.simpleDrive(-1 * gamepad2.left_stick_y);
+        freightArm.execute(gamepad2.a, gamepad2.b, gamepad2.x, gamepad2.y);
     }
 
     public void stopAll(){

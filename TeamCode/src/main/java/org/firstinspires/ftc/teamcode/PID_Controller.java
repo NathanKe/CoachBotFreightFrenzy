@@ -31,7 +31,7 @@ public class PID_Controller {
         TIMER.reset();
     }
 
-    public double output(double error){
+    public double getOutput(double error){
         double TIME_DIFF = TIMER.milliseconds() - PREV_MILLISECONDS;
         PREV_MILLISECONDS = TIMER.milliseconds();
         PREV_ERROR = error;
@@ -43,8 +43,6 @@ public class PID_Controller {
 
 
         double raw_out = p_val + i_val + d_val;
-        double clipped_out = Math.signum(raw_out) + Math.min(MAX_OUTPUT, Math.abs(raw_out));
-
-        return clipped_out;
+        return Math.signum(raw_out) * Math.min(MAX_OUTPUT, Math.abs(raw_out));
     }
 }
