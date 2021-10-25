@@ -4,7 +4,7 @@ import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
 
-@TeleOp(name="RevBotTele")
+@TeleOp(name="RevBotTele", group="")
 public class RevBotTele extends OpMode {
     private RevBot revBot;
 

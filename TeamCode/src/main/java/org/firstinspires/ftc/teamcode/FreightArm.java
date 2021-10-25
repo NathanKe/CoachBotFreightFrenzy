@@ -87,6 +87,6 @@ public class FreightArm {
     public void simpleDrive(double power){
         motorArm.setPower(power);
         telemetry.addData("armPow", power);
-        telemetry.addData("potVolt", potentiometer.getVersion());
+        telemetry.addData("potVolt", potentiometer.getVoltage());
     }
 }

@@ -19,7 +19,7 @@ public class PushBotPlatform {
         this.telemetry = in_telemetry;
         motorRight = in_hwMap.get(DcMotor.class, "motorRight");
         motorLeft = in_hwMap.get(DcMotor.class, "motorLeft");
-        motorRight.setDirection(DcMotor.Direction.REVERSE);
+        motorLeft.setDirection(DcMotor.Direction.REVERSE);
         stopDriveMotors();
     }
 
