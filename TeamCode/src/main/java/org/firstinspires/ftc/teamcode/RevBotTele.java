@@ -1,16 +1,21 @@
 package org.firstinspires.ftc.teamcode;
 
+import com.acmerobotics.dashboard.FtcDashboard;
+import com.acmerobotics.dashboard.config.Config;
+import com.acmerobotics.dashboard.telemetry.TelemetryPacket;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
-
 @TeleOp(name="RevBotTele", group="")
 public class RevBotTele extends OpMode {
-    private RevBot revBot;
+    FtcDashboard dashboard;
+
+    public static RevBot revBot;
 
     @Override
     public void init(){
         revBot = new RevBot(telemetry, hardwareMap);
+        dashboard = FtcDashboard.getInstance();
     }
 
     @Override

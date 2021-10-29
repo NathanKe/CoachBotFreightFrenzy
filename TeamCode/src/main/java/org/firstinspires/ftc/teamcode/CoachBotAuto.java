@@ -3,7 +3,7 @@ package org.firstinspires.ftc.teamcode;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 
-@Autonomous(name="CoachBotAuto")
+//@Autonomous(name="CoachBotAuto")
 public class CoachBotAuto extends LinearOpMode {
     private RevBot revBot;
 

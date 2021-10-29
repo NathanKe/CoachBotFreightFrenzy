@@ -12,7 +12,7 @@ public class FreightArm {
     private Telemetry telemetry;
     private AnalogInput potentiometer;
     private DcMotor motorArm;
-    public static PID_Controller pid_controller;
+    private PID_Controller pid_controller;
 
     private enum ARM_STATE {
         SCOOP,

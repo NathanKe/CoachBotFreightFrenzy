@@ -4,7 +4,7 @@ import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotor;
 
-@TeleOp(name="PIDTest")
+//@TeleOp(name="PIDTest")
 public class PIDTestTele extends OpMode {
     private PID_Controller pid_controller;
     private DcMotor motor;
