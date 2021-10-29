@@ -1,16 +1,18 @@
 package org.firstinspires.ftc.teamcode;
 
+import com.acmerobotics.dashboard.config.Config;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
+@Config
 public class PID_Controller {
-    private double PROPORTIONAL_CONSTANT;
-    private double INTEGRAL_CONSTANT;
-    private double DERIVATIVE_CONSTANT;
+    public static double PROPORTIONAL_CONSTANT;
+    public static double INTEGRAL_CONSTANT;
+    public static double DERIVATIVE_CONSTANT;
 
     private double INTEGRAL_ERROR;
     private double PREV_ERROR;
 
-    private double MAX_OUTPUT;
+    public static double MAX_OUTPUT;
 
     private ElapsedTime TIMER;
     private double PREV_MILLISECONDS;

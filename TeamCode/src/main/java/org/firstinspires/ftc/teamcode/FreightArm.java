@@ -1,16 +1,18 @@
 package org.firstinspires.ftc.teamcode;
 
+import com.acmerobotics.dashboard.config.Config;
 import com.qualcomm.robotcore.hardware.AnalogInput;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 
 import org.firstinspires.ftc.robotcore.external.Telemetry;
 
+@Config
 public class FreightArm {
     private Telemetry telemetry;
     private AnalogInput potentiometer;
     private DcMotor motorArm;
-    private PID_Controller pid_controller;
+    public static PID_Controller pid_controller;
 
     private enum ARM_STATE {
         SCOOP,
@@ -21,10 +23,10 @@ public class FreightArm {
 
     private ARM_STATE state;
 
-    private double VOLTAGE_GROUND;
-    private double VOLTAGE_LEVEL_ONE;
-    private double VOLTAGE_LEVEL_TWO;
-    private double VOLTAGE_LEVEL_THREE;
+    public static double VOLTAGE_GROUND;
+    public static double VOLTAGE_LEVEL_ONE;
+    public static double VOLTAGE_LEVEL_TWO;
+    public static double VOLTAGE_LEVEL_THREE;
 
 
     public FreightArm(Telemetry in_telemetry, HardwareMap in_hardwareMap){
@@ -32,7 +34,7 @@ public class FreightArm {
 
         motorArm = in_hardwareMap.get(DcMotor.class, "motorArm");
         potentiometer = in_hardwareMap.get(AnalogInput.class, "potentiometer");
-        pid_controller = new PID_Controller(1.0,0, 0, 0);
+        pid_controller = new PID_Controller(0.0, 0.0, 0.0, 1.0);
 
         state = ARM_STATE.CRUISE;
 
