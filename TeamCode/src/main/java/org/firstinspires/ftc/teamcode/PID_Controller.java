@@ -3,6 +3,8 @@ package org.firstinspires.ftc.teamcode;
 import com.acmerobotics.dashboard.config.Config;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
+import java.time.chrono.MinguoChronology;
+
 @Config
 public class PID_Controller {
     public static double PROPORTIONAL_CONSTANT;
@@ -13,16 +15,18 @@ public class PID_Controller {
     private double PREV_ERROR;
 
     public static double MAX_OUTPUT;
+    public static double MIN_OUTPUT;
 
     private ElapsedTime TIMER;
     private double PREV_MILLISECONDS;
 
-    PID_Controller(double in_Prop, double in_Intr, double in_Deriv, double in_MaxOut){
+    PID_Controller(double in_Prop, double in_Intr, double in_Deriv, double in_MaxOut, double in_minOut){
         PROPORTIONAL_CONSTANT = in_Prop;
         INTEGRAL_CONSTANT = in_Intr;
         DERIVATIVE_CONSTANT = in_Deriv;
 
         MAX_OUTPUT = in_MaxOut;
+        MIN_OUTPUT = in_minOut;
 
         TIMER = new ElapsedTime(ElapsedTime.Resolution.MILLISECONDS);
         TIMER.reset();
@@ -45,6 +49,13 @@ public class PID_Controller {
 
 
         double raw_out = p_val + i_val + d_val;
-        return Math.signum(raw_out) * Math.min(MAX_OUTPUT, Math.abs(raw_out));
+
+        if(raw_out <= MIN_OUTPUT){
+            return MIN_OUTPUT;
+        }else if(raw_out >= MAX_OUTPUT){
+            return MAX_OUTPUT;
+        }else{
+            return raw_out;
+        }
     }
 }
