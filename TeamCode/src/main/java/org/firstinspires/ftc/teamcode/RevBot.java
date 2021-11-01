@@ -24,9 +24,8 @@ public class RevBot {
         pushBotPlatform.simpleDrive(-1 * gamepad1.left_stick_y, gamepad1.right_stick_x);
 
         //player two works the arm
-        intake.simpleDrive(gamepad2.left_trigger - gamepad2.right_trigger * 0.25);
-
-        freightArm.execute(gamepad2.cross, gamepad2.square, gamepad2.triangle, gamepad2.circle, gamepad2.left_stick_button, gamepad2.left_stick_y);
+        intake.simpleDrive(gamepad2.left_trigger - gamepad2.right_trigger * 0.5);
+        freightArm.execute(gamepad2.cross, gamepad2.square, gamepad2.triangle, gamepad2.circle, gamepad2.left_stick_button, -1.0 * gamepad2.left_stick_y);
 
     }
 

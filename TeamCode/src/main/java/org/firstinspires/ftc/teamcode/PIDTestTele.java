@@ -4,8 +4,11 @@ import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotor;
 
+import org.firstinspires.ftc.robotcore.external.Telemetry;
+
 //@TeleOp(name="PIDTest")
 public class PIDTestTele extends OpMode {
+    private Telemetry telemetry;
     private PID_Controller pid_controller;
     private DcMotor motor;
 
@@ -14,7 +17,7 @@ public class PIDTestTele extends OpMode {
 
     @Override
     public void init() {
-        pid_controller = new PID_Controller(0.005, 0, 0, 1.0);
+        pid_controller = new PID_Controller(0.005, 0, 0, 1.0, -0.5, telemetry);
         motor = hardwareMap.get(DcMotor.class, "motor");
         motor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         motor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);

@@ -3,6 +3,7 @@ package org.firstinspires.ftc.teamcode;
 import com.acmerobotics.dashboard.config.Config;
 import com.qualcomm.robotcore.hardware.AnalogInput;
 import com.qualcomm.robotcore.hardware.DcMotor;
+import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 
 import org.firstinspires.ftc.robotcore.external.Telemetry;
@@ -35,8 +36,14 @@ public class FreightArm {
         telemetry = in_telemetry;
 
         motorArm = in_hardwareMap.get(DcMotor.class, "motorArm");
+        motorArm.setDirection(DcMotorSimple.Direction.REVERSE);
         potentiometer = in_hardwareMap.get(AnalogInput.class, "potentiometer");
-        pid_controller = new PID_Controller(5.0, 0.01, 0.0, 1.0, -0.5);
+        pid_controller = new PID_Controller(8.0, 0.0, 0.0, 0.75, -0.05, in_telemetry);
+
+        VOLTAGE_GROUND = potentiometer.getVoltage();
+        VOLTAGE_LEVEL_ONE = VOLTAGE_GROUND + 0.16;
+        VOLTAGE_LEVEL_TWO = VOLTAGE_LEVEL_ONE + 0.16;
+        VOLTAGE_LEVEL_THREE = VOLTAGE_LEVEL_TWO + 0.16;
 
         state = ARM_STATE.LEVEL_ONE;
         GOAL_VOLTAGE = VOLTAGE_LEVEL_ONE;
@@ -45,7 +52,7 @@ public class FreightArm {
     }
 
     public void execute(boolean ground_request, boolean level_one_request, boolean level_two_request, boolean level_three_request, boolean manual_mode_request, double manual_power){
-        telemetry.addData("faceButtons", ground_request+"-"+level_one_request+"-"+level_two_request+"-"+level_three_request);
+        telemetry.addData("faceButtons", ground_request+"-"+level_one_request+"-"+level_two_request+"-"+level_three_request+"--"+manual_mode_request);
 
         if(ground_request && !level_one_request && !level_two_request && !level_three_request && !manual_mode_request && state != ARM_STATE.GROUND){
             state = ARM_STATE.GROUND;
@@ -63,7 +70,7 @@ public class FreightArm {
             state = ARM_STATE.LEVEL_THREE;
             GOAL_VOLTAGE = VOLTAGE_LEVEL_THREE;
             pid_controller.reset();
-        }else if(!ground_request && !level_one_request && !level_two_request && level_three_request && manual_mode_request && state != ARM_STATE.MANUAL_CONTROL){
+        }else if(!ground_request && !level_one_request && !level_two_request && !level_three_request && manual_mode_request && state != ARM_STATE.MANUAL_CONTROL){
             state = ARM_STATE.MANUAL_CONTROL;
         }else{
             //multiple or nothing pushed, leave state alone
@@ -82,7 +89,7 @@ public class FreightArm {
 
     private void arm_state_control(){
         telemetry.addData("state", this.state);
-        double error = potentiometer.getVoltage() - GOAL_VOLTAGE;
+        double error = GOAL_VOLTAGE - potentiometer.getVoltage();
         double outputPower = pid_controller.getOutput(error);
 
         motorArm.setPower(outputPower);

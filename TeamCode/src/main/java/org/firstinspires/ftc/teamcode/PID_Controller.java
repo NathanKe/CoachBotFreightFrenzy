@@ -3,24 +3,28 @@ package org.firstinspires.ftc.teamcode;
 import com.acmerobotics.dashboard.config.Config;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
+import org.firstinspires.ftc.robotcore.external.Telemetry;
+
 import java.time.chrono.MinguoChronology;
 
 @Config
 public class PID_Controller {
+    private Telemetry telemetry;
+
     public static double PROPORTIONAL_CONSTANT;
     public static double INTEGRAL_CONSTANT;
     public static double DERIVATIVE_CONSTANT;
 
-    private double INTEGRAL_ERROR;
+    public double INTEGRAL_ERROR;
     private double PREV_ERROR;
 
     public static double MAX_OUTPUT;
     public static double MIN_OUTPUT;
 
-    private ElapsedTime TIMER;
+    public ElapsedTime TIMER;
     private double PREV_MILLISECONDS;
 
-    PID_Controller(double in_Prop, double in_Intr, double in_Deriv, double in_MaxOut, double in_minOut){
+    PID_Controller(double in_Prop, double in_Intr, double in_Deriv, double in_MaxOut, double in_minOut, Telemetry in_telemetry){
         PROPORTIONAL_CONSTANT = in_Prop;
         INTEGRAL_CONSTANT = in_Intr;
         DERIVATIVE_CONSTANT = in_Deriv;
@@ -30,10 +34,12 @@ public class PID_Controller {
 
         TIMER = new ElapsedTime(ElapsedTime.Resolution.MILLISECONDS);
         TIMER.reset();
+
+        telemetry = in_telemetry;
     }
 
     public void reset(){
-        INTEGRAL_ERROR = 0.0;
+        this.INTEGRAL_ERROR = 0.0;
         TIMER.reset();
     }
 
@@ -46,6 +52,10 @@ public class PID_Controller {
         double p_val = PROPORTIONAL_CONSTANT * error;
         double i_val = INTEGRAL_CONSTANT * INTEGRAL_ERROR;
         double d_val = DERIVATIVE_CONSTANT * ((error - PREV_ERROR)/TIME_DIFF);
+
+        telemetry.addData("p_val", p_val);
+        telemetry.addData("i_val", i_val);
+        telemetry.addData("d_val", d_val);
 
 
         double raw_out = p_val + i_val + d_val;
