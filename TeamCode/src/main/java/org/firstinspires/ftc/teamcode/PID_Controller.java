@@ -1,6 +1,8 @@
 package org.firstinspires.ftc.teamcode;
 
+import com.acmerobotics.dashboard.FtcDashboard;
 import com.acmerobotics.dashboard.config.Config;
+import com.acmerobotics.dashboard.telemetry.TelemetryPacket;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
 import org.firstinspires.ftc.robotcore.external.Telemetry;
@@ -8,6 +10,7 @@ import org.firstinspires.ftc.robotcore.external.Telemetry;
 @Config
 public class PID_Controller {
     private final Telemetry telemetry;
+    private final FtcDashboard dashboard;
 
     public static double PROPORTIONAL_CONSTANT;
     public static double INTEGRAL_CONSTANT;
@@ -22,7 +25,10 @@ public class PID_Controller {
     public ElapsedTime TIMER;
     private double PREV_MILLISECONDS;
 
-    PID_Controller(double in_Prop, double in_Intr, double in_Deriv, double in_MaxOut, double in_minOut, Telemetry in_telemetry) {
+    PID_Controller(double in_Prop, double in_Intr, double in_Deriv, double in_MaxOut, double in_minOut, Telemetry in_telemetry, FtcDashboard in_dashboard) {
+        telemetry = in_telemetry;
+        dashboard = in_dashboard;
+
         PROPORTIONAL_CONSTANT = in_Prop;
         INTEGRAL_CONSTANT = in_Intr;
         DERIVATIVE_CONSTANT = in_Deriv;
@@ -32,8 +38,6 @@ public class PID_Controller {
 
         TIMER = new ElapsedTime(ElapsedTime.Resolution.MILLISECONDS);
         TIMER.reset();
-
-        telemetry = in_telemetry;
     }
 
     public void reset() {
@@ -41,7 +45,7 @@ public class PID_Controller {
         TIMER.reset();
     }
 
-    public double getOutput(double error) {
+    public double getOutput(double error, TelemetryPacket tp) {
         double CUR_TIME = TIMER.milliseconds();
         double TIME_DIFF = CUR_TIME - PREV_MILLISECONDS;
         PREV_MILLISECONDS = CUR_TIME;
@@ -51,20 +55,21 @@ public class PID_Controller {
         double p_val = PROPORTIONAL_CONSTANT * error;
         double i_val = INTEGRAL_CONSTANT * INTEGRAL_ERROR;
         double d_val = DERIVATIVE_CONSTANT * ((error - PREV_ERROR) / TIME_DIFF);
-
-        telemetry.addData("p_val", p_val);
-        telemetry.addData("i_val", i_val);
-        telemetry.addData("d_val", d_val);
-
-
         double raw_out = p_val + i_val + d_val;
-
+        double out;
         if (raw_out <= MIN_OUTPUT) {
-            return MIN_OUTPUT;
-        } else if (raw_out >= MAX_OUTPUT) {
-            return MAX_OUTPUT;
-        } else {
-            return raw_out;
+            out = MIN_OUTPUT;
+        } else{
+            out = Math.min(MAX_OUTPUT, raw_out);
         }
+
+        tp.put("p_val", p_val);
+        tp.put("i_val", i_val);
+        tp.put("d_val", d_val);
+        tp.put("raw_out", raw_out);
+        tp.put("out", out);
+        dashboard.sendTelemetryPacket(tp);
+
+        return out;
     }
 }

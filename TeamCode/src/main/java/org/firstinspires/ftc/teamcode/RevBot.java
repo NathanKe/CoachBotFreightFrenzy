@@ -1,5 +1,6 @@
 package org.firstinspires.ftc.teamcode;
 
+import com.acmerobotics.dashboard.FtcDashboard;
 import com.qualcomm.robotcore.hardware.Gamepad;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 
@@ -11,11 +12,14 @@ public class RevBot {
     private final Intake intake;
 
     private final Telemetry telemetry;
+    private FtcDashboard dashboard;
 
-    public RevBot(Telemetry in_telemetry, HardwareMap in_hardwareMap) {
+    public RevBot(Telemetry in_telemetry, HardwareMap in_hardwareMap, FtcDashboard in_dashboard) {
         telemetry = in_telemetry;
+        dashboard = in_dashboard;
+
         pushBotPlatform = new PushBotPlatform(in_telemetry, in_hardwareMap);
-        freightArm = new FreightArm(in_telemetry, in_hardwareMap);
+        freightArm = new FreightArm(in_telemetry, in_hardwareMap, in_dashboard);
         intake = new Intake(in_telemetry, in_hardwareMap);
     }
 

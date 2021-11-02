@@ -15,8 +15,8 @@ public class RevBotTele extends OpMode {
 
     @Override
     public void init() {
-        revBot = new RevBot(telemetry, hardwareMap);
         dashboard = FtcDashboard.getInstance();
+        revBot = new RevBot(telemetry, hardwareMap, dashboard);
     }
 
     @Override

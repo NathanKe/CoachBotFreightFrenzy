@@ -1,16 +1,21 @@
 package org.firstinspires.ftc.teamcode;
 
+import com.acmerobotics.dashboard.FtcDashboard;
 import com.acmerobotics.dashboard.config.Config;
+import com.acmerobotics.dashboard.telemetry.TelemetryPacket;
 import com.qualcomm.robotcore.hardware.AnalogInput;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 
 import org.firstinspires.ftc.robotcore.external.Telemetry;
+import org.firstinspires.ftc.robotcore.internal.ftdi.FtDevice;
 
 @Config
 public class FreightArm {
     private final Telemetry telemetry;
+    private final FtcDashboard dashboard;
+
     private final AnalogInput potentiometer;
     private final DcMotor motorArm;
     private final PID_Controller pid_controller;
@@ -32,13 +37,14 @@ public class FreightArm {
     public static double VOLTAGE_LEVEL_THREE = 0.90;
 
 
-    public FreightArm(Telemetry in_telemetry, HardwareMap in_hardwareMap) {
+    public FreightArm(Telemetry in_telemetry, HardwareMap in_hardwareMap, FtcDashboard in_dashboard) {
         telemetry = in_telemetry;
+        dashboard = in_dashboard;
 
         motorArm = in_hardwareMap.get(DcMotor.class, "motorArm");
         motorArm.setDirection(DcMotorSimple.Direction.REVERSE);
         potentiometer = in_hardwareMap.get(AnalogInput.class, "potentiometer");
-        pid_controller = new PID_Controller(8.0, 0.0, 0.0, 0.75, -0.05, in_telemetry);
+        pid_controller = new PID_Controller(8.0, 0.0, 0.0, 0.75, -0.05, in_telemetry, in_dashboard);
 
         VOLTAGE_GROUND = potentiometer.getVoltage();
         VOLTAGE_LEVEL_ONE = VOLTAGE_GROUND + 0.16;
@@ -72,8 +78,6 @@ public class FreightArm {
             pid_controller.reset();
         } else if (!ground_request && !level_one_request && !level_two_request && !level_three_request && manual_mode_request && state != ARM_STATE.MANUAL_CONTROL) {
             state = ARM_STATE.MANUAL_CONTROL;
-        } else {
-            //multiple or nothing pushed, leave state alone
         }
 
         arm_control(manual_power);
@@ -82,15 +86,19 @@ public class FreightArm {
     private void arm_control(double manual_power) {
         if (this.state == ARM_STATE.MANUAL_CONTROL) {
             arm_manual_control(manual_power);
-        } else {
+        }else {
             arm_state_control();
         }
     }
 
     private void arm_state_control() {
+        TelemetryPacket tp = new TelemetryPacket();
+        tp.addTimestamp();
+        tp.put("potVolt", potentiometer.getVoltage());
+
         telemetry.addData("state", this.state);
         double error = GOAL_VOLTAGE - potentiometer.getVoltage();
-        double outputPower = pid_controller.getOutput(error);
+        double outputPower = pid_controller.getOutput(error, tp);
 
         motorArm.setPower(outputPower);
 

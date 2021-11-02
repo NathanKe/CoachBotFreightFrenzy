@@ -21,6 +21,6 @@ dependencies {
 }
 
 //Easy Open CV
-dependencies {
-    implementation 'org.openftc:easyopencv:1.5.0'
-}
+//dependencies {
+//    implementation 'org.openftc:easyopencv:1.5.0'
+//}
