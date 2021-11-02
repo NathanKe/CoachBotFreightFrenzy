@@ -8,12 +8,12 @@ public class CoachBotAuto extends LinearOpMode {
     private RevBot revBot;
 
     @Override
-    public void runOpMode(){
+    public void runOpMode() {
         revBot = new RevBot(telemetry, hardwareMap);
 
         waitForStart();
 
-        while(opModeIsActive()){
+        while (opModeIsActive()) {
 
         }
     }

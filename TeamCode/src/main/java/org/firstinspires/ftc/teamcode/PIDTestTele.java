@@ -12,7 +12,7 @@ public class PIDTestTele extends OpMode {
     private PID_Controller pid_controller;
     private DcMotor motor;
 
-    private int GOAL_TICKS = 500;
+    private final int GOAL_TICKS = 500;
     double cur_error;
 
     @Override
@@ -32,8 +32,8 @@ public class PIDTestTele extends OpMode {
 
         motor.setPower(out_power);
 
-        telemetry.addData("pow",out_power);
-        telemetry.addData("err",cur_error);
+        telemetry.addData("pow", out_power);
+        telemetry.addData("err", cur_error);
         telemetry.addData("ticks", motor.getCurrentPosition());
         telemetry.update();
 

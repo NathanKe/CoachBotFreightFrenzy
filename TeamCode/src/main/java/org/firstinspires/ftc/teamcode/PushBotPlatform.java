@@ -8,12 +8,12 @@ import org.firstinspires.ftc.robotcore.external.Telemetry;
 import java.text.DecimalFormat;
 
 public class PushBotPlatform {
-    private Telemetry telemetry;
+    private final Telemetry telemetry;
 
-    private DcMotor motorRight;
-    private DcMotor motorLeft;
+    private final DcMotor motorRight;
+    private final DcMotor motorLeft;
 
-    private DecimalFormat twoDecimalPlaces = new DecimalFormat("#.##");
+    private final DecimalFormat twoDecimalPlaces = new DecimalFormat("#.##");
 
     PushBotPlatform(Telemetry in_telemetry, HardwareMap in_hwMap) {
         this.telemetry = in_telemetry;
@@ -24,10 +24,10 @@ public class PushBotPlatform {
     }
 
     void simpleDrive(double left_y, double right_x) {
-        double scale = Math.max(Math.abs(left_y)+Math.abs(right_x), 1);
+        double scale = Math.max(Math.abs(left_y) + Math.abs(right_x), 1);
 
-        double left_pow = (left_y + right_x)/scale;
-        double right_pow = (left_y - right_x)/scale;
+        double left_pow = (left_y + right_x) / scale;
+        double right_pow = (left_y - right_x) / scale;
 
         motorLeft.setPower(left_pow);
         motorRight.setPower(right_pow);

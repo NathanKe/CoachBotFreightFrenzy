@@ -11,9 +11,9 @@ class GyroMecanumPlatform {
     MecanumPlatform mecanumPlatform;
     Gyro gyro;
 
-    private Telemetry telemetry;
+    private final Telemetry telemetry;
 
-    private DecimalFormat twoDecimalPlaces = new DecimalFormat("#.##");
+    private final DecimalFormat twoDecimalPlaces = new DecimalFormat("#.##");
 
     GyroMecanumPlatform(Telemetry in_telemetry, HardwareMap in_hwMap) {
         this.telemetry = in_telemetry;

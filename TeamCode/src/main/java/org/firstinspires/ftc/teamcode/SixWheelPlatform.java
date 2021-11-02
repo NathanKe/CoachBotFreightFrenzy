@@ -8,14 +8,14 @@ import org.firstinspires.ftc.robotcore.external.Telemetry;
 import java.text.DecimalFormat;
 
 public class SixWheelPlatform {
-    private Telemetry telemetry;
+    private final Telemetry telemetry;
 
-    private DcMotor motorRightOne;
-    private DcMotor motorRightTwo;
-    private DcMotor motorLeftOne;
-    private DcMotor motorLeftTwo;
+    private final DcMotor motorRightOne;
+    private final DcMotor motorRightTwo;
+    private final DcMotor motorLeftOne;
+    private final DcMotor motorLeftTwo;
 
-    private DecimalFormat twoDecimalPlaces = new DecimalFormat("#.##");
+    private final DecimalFormat twoDecimalPlaces = new DecimalFormat("#.##");
 
     SixWheelPlatform(Telemetry in_telemetry, HardwareMap in_hwMap) {
         this.telemetry = in_telemetry;

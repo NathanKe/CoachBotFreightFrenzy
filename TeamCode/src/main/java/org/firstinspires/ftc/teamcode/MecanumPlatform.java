@@ -11,14 +11,14 @@ import java.util.Collections;
 
 class MecanumPlatform {
 
-    private Telemetry telemetry;
+    private final Telemetry telemetry;
 
-    private DcMotor motorFL;
-    private DcMotor motorFR;
-    private DcMotor motorBL;
-    private DcMotor motorBR;
+    private final DcMotor motorFL;
+    private final DcMotor motorFR;
+    private final DcMotor motorBL;
+    private final DcMotor motorBR;
 
-    private DecimalFormat twoDecimalPlaces = new DecimalFormat("#.##");
+    private final DecimalFormat twoDecimalPlaces = new DecimalFormat("#.##");
 
     MecanumPlatform(Telemetry in_telemetry, HardwareMap in_hwMap) {
         this.telemetry = in_telemetry;
