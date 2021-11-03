@@ -81,13 +81,13 @@ public class FreightArm {
         TelemetryPacket tp = new TelemetryPacket();
         tp.addTimestamp();
         tp.put("potVolt", potentiometer.getVoltage());
-
-        telemetry.addData("state", this.state);
         double error = GOAL_VOLTAGE - potentiometer.getVoltage();
         double outputPower = pid_controller.getOutput(error, tp);
+        dashboard.sendTelemetryPacket(tp);
 
         motorArm.setPower(outputPower);
 
+        telemetry.addData("state", this.state);
         telemetry.addData("errVolt", error);
         telemetry.addData("potVolt", potentiometer.getVoltage());
         telemetry.addData("armPow", outputPower);

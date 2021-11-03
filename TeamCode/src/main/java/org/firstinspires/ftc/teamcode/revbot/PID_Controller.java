@@ -21,13 +21,13 @@ public class PID_Controller {
     private double PREV_ERROR;
     private double PREV_MILLISECONDS;
 
-    PID_Controller(double in_Prop, double in_Intr, double in_Deriv, double in_MaxOut, double in_minOut, Telemetry in_telemetry, FtcDashboard in_dashboard) {
+    PID_Controller(double in_Proportional, double in_Integral, double in_Derivative, double in_MaxOut, double in_minOut, Telemetry in_telemetry, FtcDashboard in_dashboard) {
         telemetry = in_telemetry;
         dashboard = in_dashboard;
 
-        PROPORTIONAL_CONSTANT = in_Prop;
-        INTEGRAL_CONSTANT = in_Intr;
-        DERIVATIVE_CONSTANT = in_Deriv;
+        PROPORTIONAL_CONSTANT = in_Proportional;
+        INTEGRAL_CONSTANT = in_Integral;
+        DERIVATIVE_CONSTANT = in_Derivative;
 
         MAX_OUTPUT = in_MaxOut;
         MIN_OUTPUT = in_minOut;
@@ -64,7 +64,6 @@ public class PID_Controller {
         tp.put("d_val", d_val);
         tp.put("raw_out", raw_out);
         tp.put("out", out);
-        dashboard.sendTelemetryPacket(tp);
 
         return out;
     }
