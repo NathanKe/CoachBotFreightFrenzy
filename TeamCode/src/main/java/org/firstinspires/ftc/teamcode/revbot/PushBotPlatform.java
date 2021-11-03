@@ -1,5 +1,6 @@
-package org.firstinspires.ftc.teamcode;
+package org.firstinspires.ftc.teamcode.revbot;
 
+import com.acmerobotics.dashboard.FtcDashboard;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 
@@ -9,14 +10,17 @@ import java.text.DecimalFormat;
 
 public class PushBotPlatform {
     private final Telemetry telemetry;
+    private final FtcDashboard dashboard;
 
     private final DcMotor motorRight;
     private final DcMotor motorLeft;
 
     private final DecimalFormat twoDecimalPlaces = new DecimalFormat("#.##");
 
-    PushBotPlatform(Telemetry in_telemetry, HardwareMap in_hwMap) {
-        this.telemetry = in_telemetry;
+    PushBotPlatform(Telemetry in_telemetry, HardwareMap in_hwMap, FtcDashboard in_dashboard) {
+        telemetry = in_telemetry;
+        dashboard = in_dashboard;
+
         motorRight = in_hwMap.get(DcMotor.class, "motorRight");
         motorLeft = in_hwMap.get(DcMotor.class, "motorLeft");
         motorLeft.setDirection(DcMotor.Direction.REVERSE);

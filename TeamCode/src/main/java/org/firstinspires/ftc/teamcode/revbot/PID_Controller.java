@@ -1,4 +1,4 @@
-package org.firstinspires.ftc.teamcode;
+package org.firstinspires.ftc.teamcode.revbot;
 
 import com.acmerobotics.dashboard.FtcDashboard;
 import com.acmerobotics.dashboard.config.Config;
@@ -9,20 +9,16 @@ import org.firstinspires.ftc.robotcore.external.Telemetry;
 
 @Config
 public class PID_Controller {
-    private final Telemetry telemetry;
-    private final FtcDashboard dashboard;
-
     public static double PROPORTIONAL_CONSTANT;
     public static double INTEGRAL_CONSTANT;
     public static double DERIVATIVE_CONSTANT;
-
-    public double INTEGRAL_ERROR;
-    private double PREV_ERROR;
-
     public static double MAX_OUTPUT;
     public static double MIN_OUTPUT;
-
+    private final Telemetry telemetry;
+    private final FtcDashboard dashboard;
+    public double INTEGRAL_ERROR;
     public ElapsedTime TIMER;
+    private double PREV_ERROR;
     private double PREV_MILLISECONDS;
 
     PID_Controller(double in_Prop, double in_Intr, double in_Deriv, double in_MaxOut, double in_minOut, Telemetry in_telemetry, FtcDashboard in_dashboard) {
@@ -59,7 +55,7 @@ public class PID_Controller {
         double out;
         if (raw_out <= MIN_OUTPUT) {
             out = MIN_OUTPUT;
-        } else{
+        } else {
             out = Math.min(MAX_OUTPUT, raw_out);
         }
 

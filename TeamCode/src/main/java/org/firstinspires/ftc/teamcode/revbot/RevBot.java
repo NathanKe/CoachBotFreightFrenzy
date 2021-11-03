@@ -1,4 +1,4 @@
-package org.firstinspires.ftc.teamcode;
+package org.firstinspires.ftc.teamcode.revbot;
 
 import com.acmerobotics.dashboard.FtcDashboard;
 import com.qualcomm.robotcore.hardware.Gamepad;
@@ -10,17 +10,14 @@ public class RevBot {
     private final PushBotPlatform pushBotPlatform;
     private final FreightArm freightArm;
     private final Intake intake;
-
-    private final Telemetry telemetry;
-    private FtcDashboard dashboard;
+    private final CarouselSpinner carouselSpinner;
 
     public RevBot(Telemetry in_telemetry, HardwareMap in_hardwareMap, FtcDashboard in_dashboard) {
-        telemetry = in_telemetry;
-        dashboard = in_dashboard;
 
-        pushBotPlatform = new PushBotPlatform(in_telemetry, in_hardwareMap);
+        pushBotPlatform = new PushBotPlatform(in_telemetry, in_hardwareMap, in_dashboard);
         freightArm = new FreightArm(in_telemetry, in_hardwareMap, in_dashboard);
-        intake = new Intake(in_telemetry, in_hardwareMap);
+        intake = new Intake(in_telemetry, in_hardwareMap, in_dashboard);
+        carouselSpinner = new CarouselSpinner(in_telemetry, in_hardwareMap, in_dashboard);
     }
 
     public void teleOp(Gamepad gamepad1, Gamepad gamepad2) {

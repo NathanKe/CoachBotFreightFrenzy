@@ -1,4 +1,4 @@
-package org.firstinspires.ftc.teamcode;
+package org.firstinspires.ftc.teamcode.ancillary_subsystems;
 
 import com.qualcomm.robotcore.hardware.HardwareMap;
 
@@ -8,12 +8,10 @@ import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
 import java.text.DecimalFormat;
 
 class GyroMecanumPlatform {
+    private final Telemetry telemetry;
+    private final DecimalFormat twoDecimalPlaces = new DecimalFormat("#.##");
     MecanumPlatform mecanumPlatform;
     Gyro gyro;
-
-    private final Telemetry telemetry;
-
-    private final DecimalFormat twoDecimalPlaces = new DecimalFormat("#.##");
 
     GyroMecanumPlatform(Telemetry in_telemetry, HardwareMap in_hwMap) {
         this.telemetry = in_telemetry;

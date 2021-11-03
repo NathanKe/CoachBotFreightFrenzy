@@ -1,4 +1,4 @@
-package org.firstinspires.ftc.teamcode;
+package org.firstinspires.ftc.teamcode.revbot;
 
 import com.acmerobotics.dashboard.FtcDashboard;
 import com.acmerobotics.dashboard.config.Config;
@@ -9,34 +9,20 @@ import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 
 import org.firstinspires.ftc.robotcore.external.Telemetry;
-import org.firstinspires.ftc.robotcore.internal.ftdi.FtDevice;
 
 @Config
 public class FreightArm {
-    private final Telemetry telemetry;
-    private final FtcDashboard dashboard;
-
-    private final AnalogInput potentiometer;
-    private final DcMotor motorArm;
-    private final PID_Controller pid_controller;
-
-    private enum ARM_STATE {
-        GROUND,
-        LEVEL_ONE,
-        LEVEL_TWO,
-        LEVEL_THREE,
-        MANUAL_CONTROL
-    }
-
-    private ARM_STATE state;
-    private double GOAL_VOLTAGE;
-
     public static double VOLTAGE_GROUND = 0.47;
     public static double VOLTAGE_LEVEL_ONE = 0.62;
     public static double VOLTAGE_LEVEL_TWO = 0.78;
     public static double VOLTAGE_LEVEL_THREE = 0.90;
-
-
+    private final Telemetry telemetry;
+    private final FtcDashboard dashboard;
+    private final AnalogInput potentiometer;
+    private final DcMotor motorArm;
+    private final PID_Controller pid_controller;
+    private ARM_STATE state;
+    private double GOAL_VOLTAGE;
     public FreightArm(Telemetry in_telemetry, HardwareMap in_hardwareMap, FtcDashboard in_dashboard) {
         telemetry = in_telemetry;
         dashboard = in_dashboard;
@@ -86,7 +72,7 @@ public class FreightArm {
     private void arm_control(double manual_power) {
         if (this.state == ARM_STATE.MANUAL_CONTROL) {
             arm_manual_control(manual_power);
-        }else {
+        } else {
             arm_state_control();
         }
     }
@@ -111,5 +97,13 @@ public class FreightArm {
         motorArm.setPower(power);
         telemetry.addData("potVolt", potentiometer.getVoltage());
         telemetry.addData("armPow", power);
+    }
+
+    private enum ARM_STATE {
+        GROUND,
+        LEVEL_ONE,
+        LEVEL_TWO,
+        LEVEL_THREE,
+        MANUAL_CONTROL
     }
 }
