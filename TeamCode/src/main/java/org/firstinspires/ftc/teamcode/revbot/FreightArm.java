@@ -30,7 +30,7 @@ public class FreightArm {
         motorArm = in_hardwareMap.get(DcMotor.class, "motorArm");
         motorArm.setDirection(DcMotorSimple.Direction.REVERSE);
         potentiometer = in_hardwareMap.get(AnalogInput.class, "potentiometer");
-        pid_controller = new PID_Controller(8.0, 0.01, 0.0, 1.0, -0.25, in_telemetry, in_dashboard);
+        pid_controller = new PID_Controller(8.0, 0.08, 0.0, 1.0, -0.25, in_telemetry, in_dashboard);
 
         VOLTAGE_GROUND = potentiometer.getVoltage();
         VOLTAGE_LEVEL_ONE = VOLTAGE_GROUND + 0.16;
