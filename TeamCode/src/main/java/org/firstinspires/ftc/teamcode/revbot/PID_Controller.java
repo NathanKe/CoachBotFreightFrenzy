@@ -60,6 +60,7 @@ public class PID_Controller {
         }
 
         tp.put("p_val", p_val);
+        tp.put("INT_ERR", INTEGRAL_ERROR);
         tp.put("i_val", i_val);
         tp.put("d_val", d_val);
         tp.put("raw_out", raw_out);

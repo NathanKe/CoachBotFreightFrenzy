@@ -30,7 +30,7 @@ public class FreightArm {
         motorArm = in_hardwareMap.get(DcMotor.class, "motorArm");
         motorArm.setDirection(DcMotorSimple.Direction.REVERSE);
         potentiometer = in_hardwareMap.get(AnalogInput.class, "potentiometer");
-        pid_controller = new PID_Controller(8.0, 0.0, 0.0, 0.75, -0.05, in_telemetry, in_dashboard);
+        pid_controller = new PID_Controller(8.0, 0.01, 0.0, 1.0, -0.25, in_telemetry, in_dashboard);
 
         VOLTAGE_GROUND = potentiometer.getVoltage();
         VOLTAGE_LEVEL_ONE = VOLTAGE_GROUND + 0.16;
@@ -46,27 +46,27 @@ public class FreightArm {
     public void execute(boolean ground_request, boolean level_one_request, boolean level_two_request, boolean level_three_request, boolean manual_mode_request, double manual_power) {
         telemetry.addData("faceButtons", ground_request + "-" + level_one_request + "-" + level_two_request + "-" + level_three_request + "--" + manual_mode_request);
 
-        if (ground_request && !level_one_request && !level_two_request && !level_three_request && !manual_mode_request && state != ARM_STATE.GROUND) {
+        if (ground_request && !level_one_request && !level_two_request && !level_three_request && !manual_mode_request) {
             state = ARM_STATE.GROUND;
             GOAL_VOLTAGE = VOLTAGE_GROUND;
             pid_controller.reset();
-        } else if (!ground_request && level_one_request && !level_two_request && !level_three_request && !manual_mode_request && state != ARM_STATE.LEVEL_ONE) {
+        } else if (!ground_request && level_one_request && !level_two_request && !level_three_request && !manual_mode_request) {
             state = ARM_STATE.LEVEL_ONE;
             GOAL_VOLTAGE = VOLTAGE_LEVEL_ONE;
             pid_controller.reset();
-        } else if (!ground_request && !level_one_request && level_two_request && !level_three_request && !manual_mode_request && state != ARM_STATE.LEVEL_TWO) {
+        } else if (!ground_request && !level_one_request && level_two_request && !level_three_request && !manual_mode_request) {
             state = ARM_STATE.LEVEL_TWO;
             GOAL_VOLTAGE = VOLTAGE_LEVEL_TWO;
             pid_controller.reset();
-        } else if (!ground_request && !level_one_request && !level_two_request && level_three_request && !manual_mode_request && state != ARM_STATE.LEVEL_THREE) {
+        } else if (!ground_request && !level_one_request && !level_two_request && level_three_request && !manual_mode_request) {
             state = ARM_STATE.LEVEL_THREE;
             GOAL_VOLTAGE = VOLTAGE_LEVEL_THREE;
             pid_controller.reset();
-        } else if (!ground_request && !level_one_request && !level_two_request && !level_three_request && manual_mode_request && state != ARM_STATE.MANUAL_CONTROL) {
+        } else if (!ground_request && !level_one_request && !level_two_request && !level_three_request && manual_mode_request) {
             state = ARM_STATE.MANUAL_CONTROL;
+        }else if(!ground_request && !level_one_request && !level_two_request && !level_three_request && !manual_mode_request){
+            arm_control(manual_power);
         }
-
-        arm_control(manual_power);
     }
 
     private void arm_control(double manual_power) {
@@ -83,6 +83,7 @@ public class FreightArm {
         tp.put("potVolt", potentiometer.getVoltage());
         double error = GOAL_VOLTAGE - potentiometer.getVoltage();
         double outputPower = pid_controller.getOutput(error, tp);
+        tp.put("err", error);
         dashboard.sendTelemetryPacket(tp);
 
         motorArm.setPower(outputPower);
