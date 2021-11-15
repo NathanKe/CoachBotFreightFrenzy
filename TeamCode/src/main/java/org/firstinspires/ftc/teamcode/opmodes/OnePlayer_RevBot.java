@@ -7,7 +7,7 @@ import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import org.firstinspires.ftc.teamcode.revbot.RevBot;
 
 @TeleOp(name = "RevBotTele", group = "")
-public class RevBotTele extends OpMode {
+public class OnePlayer_RevBot extends OpMode {
     public static RevBot revBot;
     FtcDashboard dashboard;
 
@@ -19,7 +19,7 @@ public class RevBotTele extends OpMode {
 
     @Override
     public void loop() {
-        revBot.twoPlayerTeleOp(gamepad1, gamepad2);
+        revBot.onePlayerTeleOp(gamepad1);
         telemetry.update();
     }
 

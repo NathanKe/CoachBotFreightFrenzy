@@ -20,7 +20,7 @@ public class Intake {
         motorIntake.setPower(0.0);
     }
 
-    public void simpleDrive(double power) {
+    public void intake(double power) {
         motorIntake.setPower(power);
         telemetry.addData("armPow", power);
     }
