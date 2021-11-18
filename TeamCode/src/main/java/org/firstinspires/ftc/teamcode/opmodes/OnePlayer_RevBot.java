@@ -6,7 +6,7 @@ import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
 import org.firstinspires.ftc.teamcode.revbot.RevBot;
 
-@TeleOp(name = "RevBotTele", group = "")
+@TeleOp(name = "OnePlayer", group = "")
 public class OnePlayer_RevBot extends OpMode {
     public static RevBot revBot;
     FtcDashboard dashboard;
